@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bestselling Products - Glow Cosmetics</title>
+    <style>
+        /* Bestselling Products Section Styles */
+        .bestsellers {
+            padding: 5rem 0;
+            background-color: #f9f5f5;
+        }
+        
+        .bestseller-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .bestseller-header h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .bestseller-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #d4a0a0;
+        }
+        
+        .bestseller-header p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #666;
+        }
+        
+        .bestseller-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .bestseller-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .bestseller-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .bestseller-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #d4a0a0;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        .bestseller-img {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+        
+        .bestseller-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .bestseller-card:hover .bestseller-img img {
+            transform: scale(1.05);
+        }
+        
+        .bestseller-info {
+            padding: 1.5rem;
+        }
+        
+        .bestseller-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .bestseller-description {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .bestseller-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .bestseller-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #d4a0a0;
+        }
+        
+        .bestseller-rating {
+            color: #ffc107;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bestseller-rating span {
+            margin-left: 5px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .bestseller-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .bestseller-btn {
+            padding: 10px 20px;
+            background-color: #d4a0a0;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .bestseller-btn:hover {
+            background-color: #c68c8c;
+        }
+        
+        .bestseller-wishlist {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .bestseller-wishlist:hover {
+            background-color: #ffeded;
+            color: #d4a0a0;
+        }
+        
+        /* Customer Reviews Slider */
+        .reviews-slider {
+            padding: 3rem 0;
+            background-color: white;
+        }
+        
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .reviews-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .review-card {
+            background-color: #f9f5f5;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem auto;
+            max-width: 700px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+        }
+        
+        .review-content {
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .review-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-color: #eee;
+            overflow: hidden;
+        }
+        
+        .review-info h4 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .review-stars {
+            color: #ffc107;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .bestseller-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .bestseller-img {
+                height: 220px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .bestseller-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .bestseller-rating {
+                margin-top: 0.5rem;
+            }
+        }
+        
+        /* Showcase Banner */
+        .showcase-banner {
+            background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0.3)), url('/api/placeholder/1200/500') center/cover no-repeat;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .showcase-content {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .showcase-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .showcase-content p {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+        
+        .showcase-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 20px;
+            background-color: rgba(212, 160, 160, 0.2);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #d4a0a0;
+        }
+        
+        .badge span {
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Bestselling Products Section -->
+    <section class="bestsellers" id="bestsellers">
+        <div class="container">
+            <div class="bestseller-header">
+                <h2>Our Bestsellers</h2>
+                <p>Discover our most loved products that have transformed skincare routines and earned the trust of thousands of customers worldwide.</p>
+            </div>
+            
+            <div class="bestseller-grid">
+                <div class="bestseller-card">
+                    <div class="bestseller-badge">#1 Bestseller</div>
+                    <div class="bestseller-img">
+                        <img src="./pexels-karolina-grabowska-4202325.jpg" alt="Hyaluronic Radiance Serum">
+                    </div>
+                    <div class="bestseller-info">
+                        <h3 class="bestseller-name">Hyaluronic Radiance Serum</h3>
+                        <p class="bestseller-description">Our signature serum delivers intense hydration with 3 types of hyaluronic acid plus antioxidants for plump, dewy skin.</p>
+                        <div class="bestseller-meta">
+                            <div class="bestseller-price">$58.00</div>
+                            <div class="bestseller-rating">
+                                ★★★★★ <span>(1,246 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="bestseller-actions">
+                            <a href="#" class="bestseller-btn">Add to Cart</a>
+                            <div class="bestseller-wishlist">♡</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bestseller-card">
+                    <div class="bestseller-badge">Trending</div>
+                    <div class="bestseller-img">
+                        <img src="./pexels-natallia-photo-311038782-16667090.jpg" alt="Vitamin C Brightening Cream">
+                    </div>
+                    <div class="bestseller-info">
+                        <h3 class="bestseller-name">Vitamin C Brightening Cream</h3>
+                        <p class="bestseller-description">Fade dark spots and even skin tone with our stabilized 20% vitamin C formula infused with niacinamide and peptides.</p>
+                        <div class="bestseller-meta">
+                            <div class="bestseller-price">$48.00</div>
+                            <div class="bestseller-rating">
+                                ★★★★★ <span>(958 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="bestseller-actions">
+                            <a href="#" class="bestseller-btn">Add to Cart</a>
+                            <div class="bestseller-wishlist">♡</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bestseller-card">
+                    <div class="bestseller-badge">Bestseller</div>
+                    <div class="bestseller-img">
+                        <img src="./pexels-arina-krasnikova-6664045.jpg" alt="Rose Quartz Facial Roller">
+                    </div>
+                    <div class="bestseller-info">
+                        <h3 class="bestseller-name">Rose Quartz Facial Roller</h3>
+                        <p class="bestseller-description">Enhance your skincare routine with this natural crystal roller that reduces puffiness and improves product absorption.</p>
+                        <div class="bestseller-meta">
+                            <div class="bestseller-price">$32.00</div>
+                            <div class="bestseller-rating">
+                                ★★★★★ <span>(723 reviews)</span>
+                            </div>
+                        </div>
+                        <div class="bestseller-actions">
+                            <a href="#" class="bestseller-btn">Add to Cart</a>
+                            <div class="bestseller-wishlist">♡</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Product Showcase Banner -->
+    <section class="showcase-banner">
+        <div class="container">
+            <div class="showcase-content">
+                <h2>Hyaluronic Radiance Serum</h2>
+                <p>Our award-winning formula has transformed thousands of skincare routines with its powerful hydrating and anti-aging benefits.</p>
+                
+                <div class="showcase-badges">
+                    <div class="badge">✓ <span>Dermatologist Tested</span></div>
+                    <div class="badge">✓ <span>Cruelty Free</span></div>
+                    <div class="badge">✓ <span>Vegan</span></div>
+                </div>
+                
+                <a href="#" class="bestseller-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Customer Reviews Slider -->
+    <section class="reviews-slider">
+        <div class="container">
+            <div class="reviews-header">
+                <h3>What Our Customers Say</h3>
+            </div>
+            
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="review-content">
+                        "I've tried countless serums, but nothing compares to the Hyaluronic Radiance Serum. My skin feels plump, hydrated, and looks noticeably brighter after just two weeks of use. It's worth every penny!"
+                    </div>
+                    <div class="review-author">
+                        <div class="review-avatar">
+                            <img src="/api/placeholder/100/100" alt="Sarah J.">
+                        </div>
+                        <div class="review-info">
+                            <h4>Sarah J.</h4>
+                            <div class="review-stars">★★★★★</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

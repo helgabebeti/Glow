@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow - Premium Skincare & Cosmetics</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #fdfbf9;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            position: fixed;
+            width: 100%;
+            background-color: rgba(253, 251, 249, 0.95);
+            z-index: 100;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #d4a0a0;
+        }
+
+       /* Remove list bullet points and add underline effect */
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none; /* Removes the bullet points */
+}
+
+.nav-links li {
+    position: relative;
+}
+
+.nav-links a {
+    font-weight: 500;
+    transition: color 0.3s;
+    text-decoration: none; /* Remove default underline */
+    padding-bottom: 5px; /* Add space for the underline effect */
+    position: relative;
+}
+
+/* Underline effect - animated on hover */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #d4a0a0;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #d4a0a0;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Active link style - when a page is currently active */
+.nav-links a.active::after {
+    width: 100%;
+    background-color: #d4a0a0;
+}
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(to right, rgba(253, 251, 249, 0.8), rgba(253, 251, 249, 0.5)), url('/api/placeholder/1200/800') center/cover no-repeat;
+        }
+
+        .hero-content {
+            width: 50%;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #d4a0a0;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #c68c8c;
+            transform: translateY(-2px);
+        }
+
+        /* Featured Products */
+        .featured {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #d4a0a0;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 250px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-category {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            color: #d4a0a0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .bestseller-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #d4a0a0;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .bestseller-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .bestseller-btn {
+            padding: 10px 20px;
+            background-color: #d4a0a0;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex: 1;
+            text-align: center;
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .bestseller-btn:hover {
+            background-color: #c68c8c;
+        }
+
+        .bestseller-wishlist {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 400;
+            margin-right: 10px;
+        }
+
+        .bestseller-wishlist:hover {
+            background-color: #ffeded;
+            color: #d4a0a0;
+        }
+
+        /* Benefits section */
+        .benefits {
+            padding: 5rem 0;
+            background-color: #f9f5f5;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #d4a0a0;
+        }
+
+        .benefit h3 {
+            margin-bottom: 1rem;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            padding: 5rem 0;
+            background: linear-gradient(45deg, #d4a0a0, #e4b7b7);
+            color: white;
+        }
+
+        .newsletter-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter p {
+            margin-bottom: 2rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            outline: none;
+        }
+
+        .newsletter-btn {
+            padding: 12px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #555;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #f5f5f5;
+            color: #d4a0a0;
+            padding: 4rem 0 2rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .footer-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: #d4a0a0;
+            position: relative;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -8px;
+            width: 40px;
+            height: 2px;
+            background-color: #d4a0a0;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #d4a0a0;
+        }
+
+        .footer-about p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: #b0a8a8;
+            border-radius: 50%;
+            color: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background-color: #d4a0a0;
+            transform: translateY(-3px);
+        }
+
+        .footer-newsletter h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-newsletter p {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            max-width: 100%;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 3px 0 0 3px;
+            background-color: #745555;
+            color: #fff;
+            outline: none;
+        }
+
+        .newsletter-input::placeholder {
+            color: #f5f5f5;
+        }
+
+        .newsletter-btn {
+            padding: 10px 15px;
+            background-color: #d4a0a0;
+            color: #fff;
+            border: none;
+            border-radius: 0 3px 3px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .newsletter-btn:hover {
+            background-color: #c68c8c;
+        }
+
+        .footer-middle {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-payment {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 25px;
+            background-color: #b0a8a8;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 0.8rem;
+        }
+
+        .footer-awards {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .award-item {
+            display: flex;
+            align-items: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .award-item svg {
+            margin-right: 0.5rem;
+            color: #d4a0a0;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            justify-self: center;
+            justify-items: center;
+        }
+
+        .footer-bottom p {
+            color: #b0a8a8;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .footer-bottom-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: #d4a0a0;
+        }
+
+        .footer-app {
+            margin-top: 1.5rem;
+        }
+
+        .footer-app p {
+            color: #d4a0a0;
+            margin-bottom: 1rem;
+        }
+
+        .app-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .app-button {
+            background-color: #b0a8a8;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+            justify-content: center;
+
+
+        }
+
+        .app-button:hover {
+            background-color: #555;
+        }
+
+        .app-button span {
+            margin-left: 8px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .footer-top {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            }
+
+            .footer-middle {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-payment,
+            .footer-awards {
+                justify-content: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input,
+            .newsletter-btn {
+                width: 100%;
+                border-radius: 3px;
+                margin-bottom: 0.8rem;
+            }
+
+            .app-buttons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-bottom-links {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+        }
+
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .hero-content {
+                width: 70%;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: #fdfbf9;
+                width: 70%;
+                height: 100vh;
+                text-align: center;
+                transition: right 0.5s;
+                box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+                padding: 2rem;
+                z-index: 99;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero-content {
+                width: 90%;
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input,
+            .newsletter-btn {
+                border-radius: 30px;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">GLOW</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#shop">Shop</a></li>
+                    <li><a href="./bestselling-products-section.html">Bestsellers</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                </div>
+            </nav>
+        </div>
+        </header>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Reveal Your Natural Beauty</h1>
+                    <p>Discover premium skincare and cosmetics made with natural ingredients for a radiant and healthy glow.
+                    </p>
+                    <a href="#shop" class="btn">Shop Now</a>
+                </div>
+            </div>
+        </section>
+        <!-- Featured Products -->
+    <section class="featured" id="shop">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="./pexels-karolina-grabowska-4202325.jpg" alt="Hydrating Serum">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Hydrating Serum</h3>
+                        <p class="product-category">Skincare</p>
+                        <p class="product-price">$45.00</p>
+                    </div>
+                    <div class="bestseller-actions">
+                        <a href="#" class="bestseller-btn">Add to Cart</a>
+                        <div class="bestseller-wishlist">♡</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="./pexels-natallia-photo-311038782-16667090.jpg" alt="Vitamin C Cream">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Vitamin C Cream</h3>
+                        <p class="product-category">Skincare</p>
+                        <p class="product-price">$38.00</p>
+                    </div>
+                    <div class="bestseller-actions">
+                        <a href="#" class="bestseller-btn">Add to Cart</a>
+                        <div class="bestseller-wishlist">♡</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="./pexels-hakimsatoso-6527698.jpg" alt="Matte Lipstick">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Matte Lipstick</h3>
+                        <p class="product-category">Makeup</p>
+                        <p class="product-price">$22.00</p>
+                    </div>
+                    <div class="bestseller-actions">
+                        <a href="#" class="bestseller-btn">Add to Cart</a>
+                        <div class="bestseller-wishlist">♡</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="./pexels-mohammadrezababaei-15327092.jpg" alt="Clay Face Mask">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Clay Face Mask</h3>
+                        <p class="product-category">Skincare</p>
+                        <p class="product-price">$28.00</p>
+                    </div>
+                    <div class="bestseller-actions">
+                        <a href="#" class="bestseller-btn">Add to Cart</a>
+                        <div class="bestseller-wishlist">♡</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Choose Us</h2>
+            <div class="benefits-grid">
+                <div class="benefit">
+                    <div class="benefit-icon">🌿</div>
+                    <h3>Natural Ingredients</h3>
+                    <p>We use only natural, ethically sourced ingredients that are gentle on your skin and the
+                        environment.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🐰</div>
+                    <h3>Cruelty-Free</h3>
+                </div>
+            </div>
+
+
+
+            </head>
+
+            <body>
+                <!-- Footer Section -->
+                <footer class="footer">
+                    <div class="footer-container">
+                        <!-- Footer Top -->
+                        <div class="footer-top">
+                            <!-- About Column -->
+                            <div class="footer-column footer-about">
+                                <h3>GLOW</h3>
+                                <p>Discover our premium skincare and cosmetics made with natural ingredients for a
+                                    radiant and healthy glow.</p>
+                                <div class="footer-social">
+                                    <a href="#" class="social-icon">fb</a>
+                                    <a href="#" class="social-icon">ig</a>
+                                    <a href="#" class="social-icon">tw</a>
+                                    <a href="#" class="social-icon">yt</a>
+                                    <a href="#" class="social-icon">pin</a>
+                                </div>
+                            </div>
+
+                            <!-- Shop Column -->
+                            <div class="footer-column">
+                                <h3>Shop</h3>
+                                <ul class="footer-links">
+                                    <li><a href="#">Skincare</a></li>
+                                    <li><a href="#">Makeup</a></li>
+                                    <li><a href="#">Bath & Body</a></li>
+                                    <li><a href="#">Hair Care</a></li>
+                                    <li><a href="#">Fragrance</a></li>
+                                    <li><a href="#">Tools & Accessories</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Information Column -->
+                            <div class="footer-column">
+                                <h3>Information</h3>
+                                <ul class="footer-links">
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Ingredients</a></li>
+                                    <li><a href="#">Sustainability</a></li>
+                                    <li><a href="#">Our Story</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Careers</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Help Column -->
+                            <div class="footer-column">
+                                <h3>Help</h3>
+                                <ul class="footer-links">
+                                    <li><a href="#">Contact Us</a></li>
+                                    <li><a href="#">FAQ</a></li>
+                                    <li><a href="#">Shipping & Returns</a></li>
+                                    <li><a href="#">Track Order</a></li>
+                                    <li><a href="#">Store Locator</a></li>
+                                </ul>
+                            </div>
+
+                            <!-- Newsletter Column -->
+                            <div class="footer-column footer-newsletter">
+                                <h3>Newsletter</h3>
+                                <p>Subscribe to receive updates, access to exclusive deals, and more.</p>
+                                <form class="newsletter-form">
+                                    <input type="email" placeholder="Enter your email" class="newsletter-input">
+                                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Footer Middle -->
+                        <div class="footer-middle">
+                            <div class="footer-payment">
+                                <div class="payment-icon">Visa</div>
+                                <div class="payment-icon">MC</div>
+                                <div class="payment-icon">Amex</div>
+                                <div class="payment-icon">PayP</div>
+                                <div class="payment-icon">Apple</div>
+                            </div>
+
+                            <div class="footer-awards">
+                                <div class="award-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z">
+                                        </path>
+                                    </svg>
+                                    <span>Eco-Beauty Award 2024</span>
+                                </div>
+                                <div class="award-item">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2">
+                                        <path
+                                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z">
+                                        </path>
+                                    </svg>
+                                    <span>Cruelty-Free Certified</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Bottom -->
+                        <div class="footer-bottom">
+                            <div class="footer-app">
+                                <p>Download our app</p>
+                                <div class="app-buttons">
+                                    <a href="#" class="app-button">
+                                        <span>App Store</span>
+                                    </a>
+                                    <a href="#" class="app-button">
+                                        <span>Google Play</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="footer-bottom-links">
+                                <a href="#">Privacy Policy</a>
+                                <a href="#">Terms of Service</a>
+                                <a href="#">Shipping Policy</a>
+                                <a href="#">Returns Policy</a>
+                                <a href="#">Accessibility</a>
+                            </div>
+
+                            <p>&copy; 2025 GLOW Cosmetics. All rights reserved.</p>
+                        </div>
+                    </div>
+                </footer>
+            </body>
+
+</html>
